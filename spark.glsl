@@ -53,15 +53,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
   const float SPEED = 0.5;
   
   vec2 uv = normalizeCoords( fragCoord );
-  vec2 uv0 = uv;
+  
+  vec2 spark = vec2((fract(iTime * SPEED) * 2. - 1.), 0.);
 
-  vec3 brightness = 0.5 - vec3(smoothstep(0., WIDTH, abs(uv.y))) / 2.;
-
-  float fractTime = - (fract(iTime * SPEED) * 2. - 1.);
-  brightness += cubicPulse(0., WIDTH, uv.x + fractTime) / 2.;
-
-  brightness -= 0.5;
-  brightness *= 2.;
+  float brightness = 1. - smoothstep(0., WIDTH, distance(uv, spark));
 
   vec3 color = vec3(1.0, 0.9, 0.4);
 
